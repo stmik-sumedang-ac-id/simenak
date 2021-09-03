@@ -1,0 +1,144 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include('user/nav.twig') %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">Ubah User</h3>
+        <div class="tile-body">
+          <form id="form_ubah" method="post" action="{{ base_url('user/aksi_ubah') }}">
+            
+            <input type="hidden" name="where[id]" value="{{ user.id }}">
+
+            <div class="form-group">
+              <label class="control-label">Nama</label>
+              <input class="form-control" required type="text" placeholder="Masukan Nama" name="data[nama]" value="{{ user.nama }}">
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Username</label>
+              <input class="form-control" required type="text" placeholder="Masukan Username" name="data[username]" value="{{ user.username }}">
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Level</label>
+              <select id="level" class="form-control select2" required name="data[level]">
+                <option {{ user.level == '1' ? 'selected' : null }} value="1">Administrator</option>
+                <option {{ user.level == '2' ? 'selected' : null }} value="2">DPM</option>
+                <option {{ user.level == '3' ? 'selected' : null }} value="3">Prodi</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Prodi</label>
+              <select id="prodi" class="form-control select2" name="data[prodi_id]">
+              </select>
+            </div>            
+
+            </div>
+            <div class="tile-footer">
+              <button id="simpan_ubah" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
+              &nbsp;&nbsp;&nbsp;
+              <a class="btn btn-secondary" href="{{ base_url('user') }}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" id="submit_ubah" style="visibility: hidden;">
+            </div>
+          </form>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">Ubah Password</h3>
+        <div class="tile-body">
+          <form id="form_ubah_password" method="post" action="{{ base_url('user/aksi_ubah_password') }}">
+            
+            <input type="hidden" name="where[id]" value="{{ user.id }}">
+
+            <div class="form-group">
+              <label class="control-label">Password</label>
+              <input class="form-control" id="password" required type="password" placeholder="Masukan Password" name="data[password]">
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Ulangi Password</label>
+              <input class="form-control" id="password2" required type="password" placeholder="Ulangi Password">
+            </div>
+
+            </div>
+            <div class="tile-footer">
+              <button id="simpan_ubah_password" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
+              &nbsp;&nbsp;&nbsp;
+              <a class="btn btn-secondary" href="{{ base_url('user') }}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" id="submit_ubah_password" style="visibility: hidden;">
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+  $('#simpan_ubah').click(function(){
+    $("#submit_ubah").click();
+  });
+
+  $('#simpan_ubah_password').click(function(){
+    $("#submit_ubah_password").click();
+  });
+
+  $('#form_ubah_password').submit(function() {
+    if ($("#password").val() != $("#password2").val()) {
+      swal("Error !!!", "Password Tidak Sama !!!", "error");
+      return false;
+    } else {
+      $("#form_ubah_password").submit();      
+    }
+  });
+
+  $(function() {
+    $(".select2").select2();
+
+    $("#prodi").prop('disabled', true);
+
+    $("#level").change(function() {
+      ganti();
+    });
+
+    ganti('{{ user.prodi_id }}');
+  });
+
+  function ganti(isi) {
+      if ($("#level").val() == 3) {
+        $.ajax({
+            type: "get", 
+            url: "{{ base_url('user/ajax_prodi/') }}",
+            timeout: 5000,
+            success: function(data) {
+                $("#prodi").html(data);
+                $("#prodi").prop('disabled', false);
+                $("#prodi").prop('required', true);
+                
+                if (isi != '') {
+                  $("#prodi").val(isi);
+                }
+
+                $("#prodi").select2();
+            },
+            error: function(data) {
+                swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+                
+                console.log(data)
+            }
+        });
+      } else {
+        $("#prodi").prop('disabled', true);
+        $("#prodi").prop('required', false);
+        $("#prodi").html("");
+        $("#prodi").select2();
+      }
+    }
+  </script>
+{% endblock %}
