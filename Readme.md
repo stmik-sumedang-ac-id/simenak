@@ -1,16 +1,12 @@
-## Develoved By BPSI ♥ STMIK Sumedang
-### yysofiyan
+## Screenshot 📸
 
+![ss](ss/Screenshot%202021-09-03%20161824.jpg)
 
-💻 Workspace Spec
+## Project Maintainers 💻
 
-![Workspace Spec](https://img.shields.io/badge/Apple-MacBook_Pro_Retina-999999?style=for-the-badge&logo=apple&logoColor=white)
-
-⚙ Maintained
-
-![M](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
-
-
-📈Website Stats
-
-![up](https://img.shields.io/website-up-down-green-red/https/data.stmik-sumedang.ac.id.svg)
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/yysofiyan"><img src="https://avatars.githubusercontent.com/u/34052001?v=4" width="100px;" alt=""/><br /><sub><b>yysofiyan</b></sub></a></td>
+    <td align="center"><a href=""><img src="https://img.shields.io/website-up-down-green-red/https/data.stmik-sumedang.ac.id.svg"
+    width="90px;" alt=""/><br /><sub><b></b></sub></a></td>
+    <td align="center"><a href=""><img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"width="100px;" alt=""/><br /><sub><b></b></sub></a></td>
